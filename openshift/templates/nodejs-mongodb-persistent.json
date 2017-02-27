@@ -232,7 +232,7 @@
                   "timeoutSeconds": 3,
                   "initialDelaySeconds": 3,
                   "httpGet": {
-                    "path": "/pagecount",
+                    "path": "/news",
                     "port": 8080
                   }
                 },
@@ -240,7 +240,7 @@
                   "timeoutSeconds": 3,
                   "initialDelaySeconds": 30,
                   "httpGet": {
-                    "path": "/pagecount",
+                    "path": "/news",
                     "port": 8080
                   }
                 },
@@ -466,7 +466,7 @@
       "displayName": "Git Repository URL",
       "description": "The URL of the repository with your application source code.",
       "required": true,
-      "value": "https://github.com/openshift/nodejs-ex.git"
+      "value": "https://github.com/imraxy/nodejs-ex"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
