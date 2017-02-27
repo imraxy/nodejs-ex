@@ -18,7 +18,6 @@
 	</style>
 	<h2>Latest Trending News</h2>
 <% if(data) { %>
-	<div class="code"><h3>Print All News</h3>
 		<table style='margin-left: 20px'>
 		<% for (var i = 0; i < data.length; i++) { %>
 			<tr><td><%- data[i].title %></td></tr>
@@ -27,7 +26,6 @@
 			<tr><td><hr></td></tr>
 		<% } %>
 		</table>
-	</div>
 		<% } else { %>
 	<span class="code" id="count-value">No database configured</span>
 </p>

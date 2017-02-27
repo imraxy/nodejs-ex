@@ -102,6 +102,11 @@ app.get('/news', function (req, res) {
   }  
 });
 
+app.get('/pagecount', function(req, res){
+    res.writeHead(200);
+    res.end();
+});
+
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
