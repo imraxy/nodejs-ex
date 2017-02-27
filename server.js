@@ -15,8 +15,10 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
+console.log(process.env.DATABASE_SERVICE_NAME);
+
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
-  var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
+  var mongoServiceName = process.env.DATABASE_SERVICE_NAME,
       mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
       mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'],
       mongoDatabase = process.env[mongoServiceName + '_DATABASE'],
@@ -32,6 +34,7 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
     mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
 
+    console.log(mongoURL)
   }
 }
 var db = null,
@@ -64,31 +67,39 @@ app.get('/', function (req, res) {
   if (!db) {
     initDb(function(err){});
   }
+
   if (db) {
-    var col = db.collection('counts');
+    var col = db.collection('news');
     // Create a document with request IP and current time of request
-    col.insert({ip: req.ip, date: Date.now()});
+    //col.insert({ip: req.ip, date: Date.now()});
+    
     col.count(function(err, count){
       res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
+
   } else {
     res.render('index.html', { pageCountMessage : null});
   }
 });
 
-app.get('/pagecount', function (req, res) {
+app.get('/news', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   if (!db) {
     initDb(function(err){});
-  }
+  }  
+    
   if (db) {
-    db.collection('counts').count(function(err, count ){
-      res.send('{ pageCount: ' + count + '}');
+    var news = db.collection('news');
+    // Find all data in the Collection collection
+    news.find().toArray(function (err, newss) {
+      if (err) return console.error(err);
+      //console.log(newss.title)
+      res.render('news.html', {data : newss})
     });
   } else {
     res.send('{ pageCount: -1 }');
-  }
+  }  
 });
 
 // error handling
