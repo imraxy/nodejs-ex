@@ -15,7 +15,11 @@ var port = process.env.PORT || process.env.NODEJS_MONGO_PERSISTENT_SERVICE_PORT 
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
-console.log(process.env.DATABASE_SERVICE_NAME);
+var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase()
+console.log("Service Name "+process.env.DATABASE_SERVICE_NAME);
+console.log("MongoURL "+mongoURL);
+console.log("Service Host "+process.env[mongoServiceName + '_SERVICE_HOST']);
+console.log("Database "+process.env[mongoServiceName + '_DATABASE']);
 
 if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
   var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
