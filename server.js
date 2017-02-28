@@ -16,6 +16,7 @@ var port = process.env.PORT || process.env.NODEJS_MONGO_PERSISTENT_SERVICE_PORT 
     mongoURLLabel = "";
 
 console.log(process.env.DATABASE_SERVICE_NAME);
+
 var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase();
 console.log("Service Name "+process.env.DATABASE_SERVICE_NAME);
 console.log("MongoURL "+mongoURL);
