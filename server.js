@@ -33,14 +33,15 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
     // Provide UI label that excludes user id and pw
     mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-
-    console.log(mongoURL)
   }
 }
 var db = null,
     dbDetails = new Object();
 
 var initDb = function(callback) {
+  
+  console.log("MongoURL = " +mongoURL)
+
   if (mongoURL == null) return;
 
   var mongodb = require('mongodb');
@@ -87,16 +88,19 @@ app.get('/news', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   console.log("in /news");
+  
   if (!db) {
     initDb(function(err){});
-  }  
+  }
+
+  console.log(db);
     
   if (db) {
     var news = db.collection('news');
     // Find all data in the Collection collection
     news.find().toArray(function (err, newss) {
       if (err) return console.error(err);
-      //console.log(newss.title)
+      console.log(newss);
       res.render('news.html', {data : newss})
     });
   } else {
