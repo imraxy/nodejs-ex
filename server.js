@@ -64,6 +64,7 @@ var initDb = function(callback) {
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
+  console.log("in /");
   if (!db) {
     initDb(function(err){});
   }
@@ -104,6 +105,7 @@ app.get('/news', function (req, res) {
 });
 
 app.get('/pagecount', function(req, res){
+  console.log("in /pagecount");
     res.writeHead(200);
     res.end();
 });
