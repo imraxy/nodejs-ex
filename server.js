@@ -65,7 +65,7 @@ var initDb = function(callback) {
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
-  console.log("in /");
+  console.log("in /news");
   if (!db) {
     initDb(function(err){});
   }
@@ -84,7 +84,7 @@ app.get('/', function (req, res) {
   }
 });
 
-app.get('/news', function (req, res) {
+app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   console.log("in /news");
