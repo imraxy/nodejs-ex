@@ -10,20 +10,15 @@ Object.assign=require('object-assign')
 app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
-var port = process.env.PORT || process.env.NODEJS_MONGO_PERSISTENT_SERVICE_PORT || 8080,
-    ip   = process.env.IP   || process.env.NODEJS_MONGO_PERSISTENT_SERVICE_HOST || '0.0.0.0',
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
+console.log(process.env.DATABASE_SERVICE_NAME);
 
-var mongoServiceName = "MONGODB"
-console.log("Service Name "+mongoServiceName);
-console.log("MongoURL "+mongoURL);
-console.log("Service Host "+process.env[mongoServiceName + '_SERVICE_HOST']);
-console.log("Database "+process.env[mongoServiceName + '_DATABASE']);
-
-if (mongoURL == null && (process.env.DATABASE_SERVICE_NAME || mongoServiceName)) {
-  //var mongoServiceName = process.env.DATABASE_SERVICE_NAME.toUpperCase(),
+if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
+  var mongoServiceName = process.env.DATABASE_SERVICE_NAME,
       mongoHost = process.env[mongoServiceName + '_SERVICE_HOST'],
       mongoPort = process.env[mongoServiceName + '_SERVICE_PORT'],
       mongoDatabase = process.env[mongoServiceName + '_DATABASE'],

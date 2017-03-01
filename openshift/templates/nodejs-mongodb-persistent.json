@@ -232,7 +232,7 @@
                   "timeoutSeconds": 3,
                   "initialDelaySeconds": 3,
                   "httpGet": {
-                    "path": "/news",
+                    "path": "/",
                     "port": 8080
                   }
                 },
