@@ -87,20 +87,20 @@ app.get('/news', function (req, res) {
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
-  console.log("in /");
+  //console.log("in /");
   
   if (!db) {
     initDb(function(err){});
   }
 
-  console.log(db);
+  //console.log(db);
     
   if (db) {
     var news = db.collection('news');
     // Find all data in the Collection collection
-    news.find().toArray(function (err, newss) {
+    news.find().sort({_id: -1}).limit(20).toArray(function (err, newss) {
       if (err) return console.error(err);
-      console.log(newss);
+      //console.log(newss);
       res.render('news.html', {data : newss})
     });
   } else {
