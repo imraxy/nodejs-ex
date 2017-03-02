@@ -87,7 +87,10 @@ app.get('/news', function (req, res) {
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
-  //console.log("in /");
+    
+  page = typeof req.query.page  !== 'undefined' ?  parseInt(req.query.page)  : 0;
+  
+  console.log("page= " +req.query.page);
   
   if (!db) {
     initDb(function(err){});
@@ -98,10 +101,10 @@ app.get('/', function (req, res) {
   if (db) {
     var news = db.collection('news');
     // Find all data in the Collection collection
-    news.find().sort({_id: -1}).limit(40).toArray(function (err, newss) {
+    news.find().sort({_id: -1}).skip(page).limit(1).toArray(function (err, newss) {
       if (err) return console.error(err);
       //console.log(newss);
-      res.render('news.html', {data : newss})
+      res.render('news.html', {data : newss, page : page+1})
     });
   } else {
     res.send('{ pageCount: -1 }');
