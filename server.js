@@ -98,7 +98,7 @@ app.get('/', function (req, res) {
   if (db) {
     var news = db.collection('news');
     // Find all data in the Collection collection
-    news.find().sort({_id: -1}).limit(20).toArray(function (err, newss) {
+    news.find().sort({_id: -1}).limit(40).toArray(function (err, newss) {
       if (err) return console.error(err);
       //console.log(newss);
       res.render('news.html', {data : newss})
