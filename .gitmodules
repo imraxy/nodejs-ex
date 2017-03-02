@@ -1,0 +1,3 @@
+[submodule "views/jscroll"]
+    path = views/jscroll
+    url = git@github.com:pklauzinski/jscroll.git
