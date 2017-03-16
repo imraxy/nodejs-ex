@@ -75,22 +75,8 @@
 
 	<script type="application/javascript">
 		function appendNewItems(data){
-			/*$('.jscroll').find('tr').each(
-				function() {
-					$(this).css('background', get_random_color());  
-				});*/
+			return true;
 		}
-
-		/*
-		function get_random_color() {
-			var letters = '0123456789ABCDEF'.split('');
-			var color = '#';
-			for (var i = 0; i < 6; i++ ) {
-				color += letters[Math.round(Math.random() * 15)];
-			}
-			return color;
-		}
-		*/
 
 		$(document).ready(function(){
 			$('.jscroll').jscroll({
@@ -98,7 +84,7 @@
 			padding: 20,
 			nextSelector: 'a.jscroll-next:last',
 			contentSelector: 'tbody',
-			callback: appendNewItems,
+			//callback: appendNewItems,
 			debug: true
 		});
 		})
