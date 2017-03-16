@@ -19,11 +19,10 @@
 	</style>
 
 	<style>
-		* {margin: 0; padding: 0;}
 
 		table {
-			margin: 20px;
-			width: 95%;
+			margin: 20px 1%;
+			width: 98%;
 		}
 
 		h3 {
@@ -42,10 +41,17 @@
 		tr {
 			padding: 10px;
 			overflow: auto;
+			background: #eee;
+			width: 100%;
+		}
+
+		tbody{
+			width: 100%;
+			display: table;
 		}
 
 		tr:hover {
-			background: #eee;
+			background: #fff;
 			cursor: pointer;
 		}
 	</style>
@@ -69,12 +75,13 @@
 
 	<script type="application/javascript">
 		function appendNewItems(data){
-			$('.jscroll').find('tr').each(
+			/*$('.jscroll').find('tr').each(
 				function() {
 					$(this).css('background', get_random_color());  
-				});
+				});*/
 		}
 
+		/*
 		function get_random_color() {
 			var letters = '0123456789ABCDEF'.split('');
 			var color = '#';
@@ -83,6 +90,7 @@
 			}
 			return color;
 		}
+		*/
 
 		$(document).ready(function(){
 			$('.jscroll').jscroll({
@@ -99,10 +107,10 @@
 </head>
 <body>
 	<% if(data) { %>
-	<table style='margin-left: 20px' class="jscroll" data-ui="jscroll-default">
+	<table class="jscroll" data-ui="jscroll-default">
 	<tbody>
 		<% for (var i = 0; i < data.length; i++) { %>
-		<tr><td><%- data[i].title %></td></tr>
+		<tr><th><%- data[i].title %></th></tr>
 		<tr><td><amp-img src="<%- data[i].img_urls %>" width="300" height="300"></amp-img><p><%- data[i].description %></p></td></tr>
 		<tr><td>Source : <a target="_blank" href=<%- data[i].url %>>More...</a></td></tr>
 		<tr><td><a href="/?page=<%=page%>" class="jscroll-next">next</a></td></tr>
