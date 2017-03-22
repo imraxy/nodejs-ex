@@ -3,7 +3,8 @@ var express = require('express'),
     fs      = require('fs'),
     app     = express(),
     eps     = require('ejs'),
-    morgan  = require('morgan');
+    morgan  = require('morgan'),
+    sm = require('sitemap');
     
 Object.assign=require('object-assign')
 
@@ -65,22 +66,24 @@ var initDb = function(callback) {
 app.get('/news', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
-  console.log("in /news");
+  console.log(req.query);
   if (!db) {
     initDb(function(err){});
   }
 
   if (db) {
     var col = db.collection('news');
-    // Create a document with request IP and current time of request
-    //col.insert({ip: req.ip, date: Date.now()});
-    
-    col.count(function(err, count){
-      res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
+
+    var news = db.collection('news');
+    // Find all data in the Collection collection
+    news.find({title:req.query.title}).limit(1).toArray(function (err, newss) {
+      if (err) return console.error(err);
+      //console.log(newss);
+      res.render('news.amp.html', {data : newss, page : 1})
     });
 
   } else {
-    res.render('index.html', { pageCountMessage : null});
+    res.send('{ pageCount: -1 }');
   }
 });
 
@@ -116,6 +119,45 @@ app.get('/pagecount', function(req, res){
     res.writeHead(200);
     res.end();
 });
+
+
+app.get('/sitemap.xml', function(req, res) {
+
+sitemap = sm.createSitemap ({
+      hostname: 'http://tejhindi.com',
+      cacheTime: 600000,        // 600 sec - cache purge period 
+    });
+
+  if (!db) {
+    initDb(function(err){});
+  }
+
+  if (db) {
+    var news = db.collection('news');
+    var cursor = news.find();
+    var counter = 0;
+
+    news.find().toArray(function(err, newss){
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        newss.forEach(function(news, index) {
+            sitemap.add({url: '/news/?title=' +news.title, changefreq: 'daily', priority: 0.7});
+        });
+
+        sitemap.toXML( function (err, xml) {
+            if (err) {
+              return res.status(500).end();
+            }
+            res.header('Content-Type', 'application/xml');
+            res.send( xml );
+        });
+    });
+  }
+});
+
 
 // error handling
 app.use(function(err, req, res, next){
