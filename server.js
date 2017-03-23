@@ -31,6 +31,7 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
     if (mongoUser && mongoPassword) {
       mongoURL += mongoUser + ':' + mongoPassword + '@';
     }
+    
     // Provide UI label that excludes user id and pw
     mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
@@ -99,14 +100,12 @@ app.get('/', function (req, res) {
     initDb(function(err){});
   }
 
-  //console.log(db);
-    
   if (db) {
     var news = db.collection('news');
     // Find all data in the Collection collection
     news.find().sort({_id: -1}).skip(page).limit(1).toArray(function (err, newss) {
       if (err) return console.error(err);
-      //console.log(newss);
+
       res.render('news.amp.html', {data : newss, page : page+1})
     });
   } else {
