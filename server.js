@@ -113,6 +113,31 @@ app.get('/', function (req, res) {
   }  
 });
 
+app.get('/mobile', function (req, res) {
+  // try to initialize the db on every request if it's not already
+  // initialized.
+    
+  page = typeof req.query.page  !== 'undefined' ?  parseInt(req.query.page)  : 0;
+  
+  console.log("page= " +req.query.page);
+  
+  if (!db) {
+    initDb(function(err){});
+  }
+
+  if (db) {
+    var news = db.collection('news');
+    // Find all data in the Collection collection
+    news.find().sort({_id: -1}).skip(page).limit(10).toArray(function (err, newss) {
+      if (err) return console.error(err);
+
+      res.write(JSON.stringify({data : newss, page : page+10}));
+    });
+  } else {
+    res.send('{ pageCount: -1 }');
+  }  
+});
+
 app.get('/pagecount', function(req, res){
   console.log("in /pagecount");
     res.writeHead(200);
