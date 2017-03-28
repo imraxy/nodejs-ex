@@ -80,7 +80,7 @@ app.get('/news', function (req, res) {
     news.find({title:req.query.title}).limit(1).toArray(function (err, newss) {
       if (err) return console.error(err);
       //console.log(newss);
-      res.render('news.amp.html', {data : newss, page : 1})
+      res.render('news.html', {data : newss, page : 1})
     });
 
   } else {
@@ -106,7 +106,7 @@ app.get('/', function (req, res) {
     news.find().sort({_id: -1}).skip(page).limit(1).toArray(function (err, newss) {
       if (err) return console.error(err);
 
-      res.render('news.amp.html', {data : newss, page : page+1})
+      res.render('news.html', {data : newss, page : page+1})
     });
   } else {
     res.send('{ pageCount: -1 }');
