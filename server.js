@@ -117,8 +117,11 @@ app.get('/mobile', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
     
-  page = typeof req.query.page  !== 'undefined' ?  parseInt(req.query.page)  : 0;
+  page = typeof req.query.page  !== 'undefined' ?  parseInt(req.query.page)  : 10;
   
+  //@todo: fix in app
+  page =  Math.abs(page-10);
+
   console.log("page= " +req.query.page);
   
   if (!db) {
