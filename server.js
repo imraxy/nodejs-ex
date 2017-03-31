@@ -120,7 +120,7 @@ app.get('/mobile', function (req, res) {
   page = typeof req.query.page  !== 'undefined' ?  parseInt(req.query.page)  : 10;
   
   //@todo: fix in app
-  page =  Math.abs(page-10);
+  skipPages =  Math.abs(page-10);
 
   console.log("page= " +req.query.page);
   
@@ -131,7 +131,7 @@ app.get('/mobile', function (req, res) {
   if (db) {
     var news = db.collection('news');
     // Find all data in the Collection collection
-    news.find().sort({_id: -1}).skip(page).limit(10).toArray(function (err, newss) {
+    news.find().sort({_id: -1}).skip(skipPages).limit(10).toArray(function (err, newss) {
       if (err) return console.error(err);
 
       res.send(JSON.stringify({data : newss, page : page+10}));
