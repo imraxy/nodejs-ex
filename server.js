@@ -112,7 +112,7 @@ app.get("/", function(req, res) {
     news
       .find()
       .sort({ _id: -1 })
-      .skip(page)
+      .skip(skipPages)
       .limit(10)
       .toArray(function(err, newss) {
         if (err) return console.error(err);
