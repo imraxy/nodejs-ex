@@ -1,4 +1,4 @@
-Change
+upgrade heroku stack
 Node.js sample app on OpenShift!
 -----------------
 
