@@ -98,6 +98,8 @@ app.get("/", function(req, res) {
 
   page = typeof req.query.page !== "undefined" ? parseInt(req.query.page) : 10;
 
+  //@todo: fix in app
+  skipPages = Math.abs(page - 10);
   console.log("page= " + req.query.page);
 
   if (!db) {
