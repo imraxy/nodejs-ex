@@ -50,8 +50,8 @@ var initDb = function(callback) {
 
   var mongodb = require("mongodb");
   if (mongodb == null) return;
-
-  mongodb.connect(mongoURL, function(err, conn) {
+  
+  mongodb.connect(mongoURL,  { useNewUrlParser: true }, function(err, conn) {
     if (err) {
       callback(err);
       return;
